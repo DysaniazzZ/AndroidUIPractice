@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <!-- Customize your color here. -->
-    <color name="colorInternalLine">#33000000</color>
+    <color name="colorIntervalLine">#33000000</color>
     <color name="colorTitleBackground">#FFFFFF</color>
     <color name="colorPageBackground">#F8F8F8</color>
 </resources>
