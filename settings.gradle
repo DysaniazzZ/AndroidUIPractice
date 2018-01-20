@@ -1,1 +1,1 @@
-include ':draw1'
+include ':draw1', ':draw2'
