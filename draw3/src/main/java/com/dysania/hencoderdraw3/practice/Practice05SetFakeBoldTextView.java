@@ -25,8 +25,8 @@ public class Practice05SetFakeBoldTextView extends View {
 
     {
         paint.setTextSize(60);
-
         // 使用 Paint.setFakeBoldText() 来加粗文字
+        paint.setFakeBoldText(true);
     }
 
     @Override
