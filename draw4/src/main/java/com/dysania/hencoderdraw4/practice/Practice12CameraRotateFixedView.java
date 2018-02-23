@@ -3,7 +3,9 @@ package com.dysania.hencoderdraw4.practice;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.support.annotation.Nullable;
@@ -37,8 +39,48 @@ public class Practice12CameraRotateFixedView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        int bitmapWidth = bitmap.getWidth();
+        int bitmapHeight = bitmap.getHeight();
+        int center1X = point1.x + bitmapWidth / 2;
+        int center1Y = point1.y + bitmapHeight / 2;
+        int center2X = point2.x + bitmapWidth / 2;
+        int center2Y = point2.y + bitmapHeight / 2;
 
+        Camera camera = new Camera();
+
+        // Canvas 的几何变换顺序是反的，所以要把移动到中心的代码写在下面，把从中心移动回来的代码写在上面
+        canvas.save();
+        canvas.translate(center1X, center1Y);   // 旋转之后把投影移动回来 
+        camera.save();
+        camera.rotateX(30);
+        camera.applyToCanvas(canvas);
+        camera.restore();
+        canvas.translate(-center1X, -center1Y); // 旋转之前把绘制内容移动到轴心（原点）
         canvas.drawBitmap(bitmap, point1.x, point1.y, paint);
+        canvas.restore();
+
+//        canvas.save();
+//        canvas.translate(center2X, center2Y);
+//        camera.save();
+//        camera.rotateY(30);
+//        camera.applyToCanvas(canvas);
+//        camera.restore();
+//        canvas.translate(-center2X, -center2Y);
+//        canvas.drawBitmap(bitmap, point2.x, point2.y, paint);
+//        canvas.restore();
+
+        // 也可以使用 Matrix 结合 Camera
+        Matrix matrix = new Matrix();
+        matrix.reset();
+        camera.save();
+        camera.rotateY(30);
+        camera.getMatrix(matrix);
+        camera.restore();
+        matrix.preTranslate(-center2X, -center2Y);
+        matrix.postTranslate(center2X, center2Y);
+        canvas.save();
+        canvas.concat(matrix);
         canvas.drawBitmap(bitmap, point2.x, point2.y, paint);
+        canvas.restore();
     }
 }
