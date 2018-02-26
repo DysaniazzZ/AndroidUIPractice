@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 public class Practice03OnDrawLayout extends LinearLayout {
-    Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     Pattern pattern = new Pattern();
 
     public Practice03OnDrawLayout(Context context) {
@@ -25,7 +24,9 @@ public class Practice03OnDrawLayout extends LinearLayout {
     }
 
     {
-        // 在这里插入 setWillNotDraw(false) 以启用完整的绘制流程
+        // 启用完整的绘制流程
+        // 因为 ViewGroup 默认会绕过 draw() 方法，换而直接执行 dispatchDraw()
+        setWillNotDraw(false);
     }
 
     @Override
@@ -47,10 +48,6 @@ public class Practice03OnDrawLayout extends LinearLayout {
             spots[1] = new Practice03OnDrawLayout.Pattern.Spot(0.69f, 0.25f, 0.067f);
             spots[2] = new Practice03OnDrawLayout.Pattern.Spot(0.32f, 0.6f, 0.067f);
             spots[3] = new Practice03OnDrawLayout.Pattern.Spot(0.62f, 0.78f, 0.083f);
-        }
-
-        private Pattern(Practice03OnDrawLayout.Pattern.Spot[] spots) {
-            this.spots = spots;
         }
 
         {
