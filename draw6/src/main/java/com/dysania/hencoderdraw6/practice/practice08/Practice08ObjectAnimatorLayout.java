@@ -1,5 +1,6 @@
 package com.dysania.hencoderdraw6.practice.practice08;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -28,16 +29,14 @@ public class Practice08ObjectAnimatorLayout extends RelativeLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        view = (Practice08ObjectAnimatorView) findViewById(R.id.objectAnimatorView);
-        animateBt = (Button) findViewById(R.id.animateBt);
+        view = findViewById(R.id.objectAnimatorView);
+        animateBt = findViewById(R.id.animateBt);
 
         animateBt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO 在这里处理点击事件，用 ObjectAnimator 播放动画
-                // 1. 用 ObjectAnimator 创建 Animator 对象
-                // 2. 用 start() 执行动画
-                // *. 记得在 Practice08ObjectAnimatorView 中为 progress 添加 setter/ getter 方法！
+                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "progress", 0, 65);
+                objectAnimator.start();
             }
         });
     }

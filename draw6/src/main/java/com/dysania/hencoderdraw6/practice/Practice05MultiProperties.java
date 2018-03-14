@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.dysania.hencoderdraw6.R;
+import com.dysania.hencoderdraw6.Utils;
 
 public class Practice05MultiProperties extends ConstraintLayout {
     Button animateBt;
     ImageView imageView;
+
+    boolean sIsReverse = false;
 
     public Practice05MultiProperties(Context context) {
         super(context);
@@ -30,15 +33,30 @@ public class Practice05MultiProperties extends ConstraintLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        animateBt = (Button) findViewById(R.id.animateBt);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        animateBt = findViewById(R.id.animateBt);
+        imageView = findViewById(R.id.imageView);
         imageView.setScaleX(0);
         imageView.setScaleY(0);
         imageView.setAlpha(0f);
         animateBt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO 在这里处理点击事件，同时对多个属性做动画
+                if (!sIsReverse) {
+                    imageView.animate()
+                            .translationX(Utils.dpToPixel(200))
+                            .rotation(360)
+                            .scaleX(1)
+                            .scaleY(1)
+                            .alpha(1);
+                } else {
+                    imageView.animate()
+                            .translationX(0)
+                            .rotation(0)
+                            .scaleX(0)
+                            .scaleY(0)
+                            .alpha(0);
+                }
+                sIsReverse = !sIsReverse;
             }
         });
     }
