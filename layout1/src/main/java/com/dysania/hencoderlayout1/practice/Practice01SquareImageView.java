@@ -29,9 +29,17 @@ public class Practice01SquareImageView extends AppCompatImageView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         // 先用 getMeasuredWidth() 和 getMeasuredHeight() 取到 super.onMeasure() 的计算结果
+        int measuredWidth = getMeasuredWidth();
+        int measuredHeight = getMeasuredHeight();
 
         // 然后通过计算，让宽度和高度一致
+        if (measuredWidth > measuredHeight) {
+            measuredWidth = measuredHeight;
+        } else {
+            measuredHeight = measuredWidth;
+        }
 
         // 再用 setMeasuredDimension(width, height) 来保存最终的宽度和高度
+        setMeasuredDimension(measuredWidth, measuredHeight);
     }
 }
