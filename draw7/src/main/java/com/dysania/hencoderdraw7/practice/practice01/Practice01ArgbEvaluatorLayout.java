@@ -1,5 +1,6 @@
 package com.dysania.hencoderdraw7.practice.practice01;
 
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -30,14 +31,20 @@ public class Practice01ArgbEvaluatorLayout extends RelativeLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        view = (Practice01ArgbEvaluatorView) findViewById(R.id.objectAnimatorView);
-        animateBt = (Button) findViewById(R.id.animateBt);
+        view = findViewById(R.id.objectAnimatorView);
+        animateBt = findViewById(R.id.animateBt);
 
         animateBt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 ObjectAnimator animator = ObjectAnimator.ofInt(view, "color", 0xffff0000, 0xff00ff00);
-                // 在这里使用 ObjectAnimator.setEvaluator() 来设置 ArgbEvaluator，修复闪烁问题
+
+                // 修复闪烁问题
+                // 1、API 21 后新加入的方法
+                // ObjectAnimator animator = ObjectAnimator.ofArgb(view, "color", 0xffff0000, 0xff00ff00);
+                // 2、使用 ObjectAnimator.setEvaluator() 来设置 ArgbEvaluator
+                animator.setEvaluator(new ArgbEvaluator());
+
                 animator.setInterpolator(new LinearInterpolator());
                 animator.setDuration(2000);
                 animator.start();

@@ -32,8 +32,8 @@ public class Practice03OfObjectLayout extends RelativeLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        view = (Practice03OfObjectView) findViewById(R.id.objectAnimatorView);
-        animateBt = (Button) findViewById(R.id.animateBt);
+        view = findViewById(R.id.objectAnimatorView);
+        animateBt = findViewById(R.id.animateBt);
 
         animateBt.setOnClickListener(new OnClickListener() {
             @Override
@@ -48,11 +48,17 @@ public class Practice03OfObjectLayout extends RelativeLayout {
     }
 
     private class PointFEvaluator implements TypeEvaluator<PointF> {
+        PointF mPointF = new PointF();
 
         // 重写 evaluate() 方法，让 PointF 可以作为属性来做动画
         @Override
         public PointF evaluate(float fraction, PointF startValue, PointF endValue) {
-            return startValue;
+            float x = startValue.x + fraction * (endValue.x - startValue.x);
+            float y = startValue.y + fraction * (endValue.y - startValue.y);
+
+            mPointF.set(x, y);
+
+            return mPointF;
         }
     }
 }
